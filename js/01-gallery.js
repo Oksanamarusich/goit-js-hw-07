@@ -24,23 +24,32 @@ function createMarkup(arr){
 
 function handlerClick(evt) {
     evt.preventDefault();
-    document.addEventListener('keydown', handlerPress);
+     if (evt.target.nodeName !== "IMG") return;
 
     const currentImg = evt.target.closest('.gallery__image');
     const source = currentImg.dataset.source;
      
-    const instance = basicLightbox.create(`<img src="${source}" />`);
-    instance.show();
-    
+  const instance = basicLightbox.create(`<img src="${source}" />`, {
+    onShow: (instance) => {
+      window.addEventListener('keydown', handlerPress);
+      
+    },
+    onClose: (instance) => {
+      window.addEventListener('keydown', handlerPress);
+      
+    }
+    });
+  instance.show();
+  
     
 }
 
 function handlerPress(evt) {
-    console.log("keydown:", evt);
-    console.log(evt.code);
-    if (evt.code === 'Escape') {
-       instance.close() 
-    }
+    
+  if (evt.code === 'Escape') {
+    instance.close();
+    } 
+      
     
     
 }

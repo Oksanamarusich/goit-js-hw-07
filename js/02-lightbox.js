@@ -2,6 +2,7 @@ import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 console.log(galleryItems);
+
 const container = document.querySelector('.gallery');
 
 container.insertAdjacentHTML('beforeend', createMarkup(galleryItems));
@@ -23,8 +24,10 @@ function createMarkup(arr){
 
 function handlerClick(evt) {
     evt.preventDefault();
-    if (evt.target === evt.currentTarget) {
-       return;
-    }
-    console.log(evt.target);
+    
+  let gallery = new SimpleLightbox('.gallery a', {
+     captionsData: 'alt', captionDelay: 250
+  
+   });
+  
 }
