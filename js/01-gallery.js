@@ -22,34 +22,35 @@ function createMarkup(arr){
 </li>`).join('');
 }
 
-function handlerClick(evt) {
-    evt.preventDefault();
-     if (evt.target.nodeName !== "IMG") return;
-
-    const currentImg = evt.target.closest('.gallery__image');
-    const source = currentImg.dataset.source;
-     
-  const instance = basicLightbox.create(`<img src="${source}" />`, {
+const instance = basicLightbox.create(`<img src="" />`, {
     onShow: (instance) => {
-      window.addEventListener('keydown', handlerPress);
+      document.addEventListener('keydown', handlerPress);
       
     },
     onClose: (instance) => {
-      window.addEventListener('keydown', handlerPress);
+      document.removeEventListener('keydown', handlerPress);
       
     }
     });
-  instance.show();
-  
+
+function handlerClick(evt) {
+    evt.preventDefault();
+    if (evt.target === evt.currentTarget) return;
+    
+    const currentImg = evt.target.closest('.gallery__image');
+    const source = currentImg.dataset.source;
+     
+    
+    instance.element().querySelector('img').src = source;
+    instance.show();
+    
     
 }
 
-function handlerPress(evt) {
-    
-  if (evt.code === 'Escape') {
+
+ function handlerPress(evt) {
+    console.log(evt);
+   if (evt.code === "Escape") {
     instance.close();
-    } 
-      
-    
-    
+  } 
 }
